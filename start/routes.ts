@@ -38,54 +38,23 @@ router
     })
   )
 
-router
-  .get('/profile', [RendersController, 'renderProfile'])
-  .as('profile')
-  .use(
+router.get('/profile', [RendersController, 'renderProfile']).as('profile')
+/*.use(
     middleware.auth({
       guards: ['web'],
     })
-  )
+  )*/
 
-router
-  .get('/chats', [RendersController, 'renderChats'])
-  .as('chats')
-  .use(
+router.get('/chats', [RendersController, 'renderChats']).as('chats')
+/*.use(
     middleware.auth({
       guards: ['web'],
     })
-  )
+  )*/
 
-router
-  .get('/add_Item', [RendersController, 'renderAddItem'])
-  .as('addItems')
-  .use(
+router.get('/add_Item', [RendersController, 'renderAddItem']).as('addItems')
+/*.use(
     middleware.auth({
       guards: ['web'],
     })
-  )
-
-/*
-router
-  .get('/home', async ({ view }) => {
-    return view.render('pages/main', { template: 'pages/items' })
-  })
-  .as('home')
-
-router
-  .get('/login', async ({ view }) => {
-    return view.render('pages/main', { template: 'pages/login' })
-  })
-  .as('login')
-
-router
-  .get('/register', async ({ view }) => {
-    return view.render('pages/main', { template: 'pages/register' })
-  })
-  .as('register')
-
-router
-  .get('/profile', async ({ view }) => {
-    return view.render('pages/main')
-  })
-  .as('profile')*/
+  )*/
