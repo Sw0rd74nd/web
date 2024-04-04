@@ -1,22 +1,25 @@
+import User from '#models/user'
+import auth from '@adonisjs/auth/services/main'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class RendersController {
-  async renderHome({ view }: HttpContext) {
+  public async renderHome({ view, auth }: HttpContext) {
+    await auth.check()
     return view.render('pages/main', { template: 'pages/items' })
   }
-  async renderLogin({ view }: HttpContext) {
+  public async renderLogin({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/login' })
   }
-  async renderRegister({ view }: HttpContext) {
+  public async renderRegister({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/register' })
   }
-  async renderProfile({ view }: HttpContext) {
+  public async renderProfile({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/profile' })
   }
-  async renderChats({ view }: HttpContext) {
+  public async renderChats({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/chats' })
   }
-  async renderAddItem({ view }: HttpContext) {
+  public async renderAddItem({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/addItem' })
   }
 }

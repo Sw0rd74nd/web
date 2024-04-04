@@ -19,10 +19,11 @@
       <a class="navbar-brand" href="{{ route('home')}}">Kleinanzeigen</a>
 
       <div class="d-flex justify-content-around">
-        @if(!auth.user)
+        @if(auth.isAuthenticated)
         <a class="btn btn-secondary mx-2" href="{{ route('addItems')}}">+</a>
         <a class="btn btn-secondary mx-2" href="{{ route('chats')}}">Chats</a>
         <a class="btn btn-secondary mx-2" href="{{ route('profile')}}">Profile</a>
+        <a class="btn btn-secondary mx-2" href="{{ route('logout')}}">Logout</a>
         @else
         <a class="btn btn-secondary mx-2" href="{{ route('register')}}">Register</a>
         <a class="btn btn-secondary mx-2" href="{{ route('login')}}">Login</a>
