@@ -21,7 +21,6 @@
       <div class="d-flex justify-content-around">
         @if(auth.isAuthenticated)
         <a class="btn btn-secondary mx-2" href="{{ route('addItems')}}">+</a>
-        <a class="btn btn-secondary mx-2" href="{{ route('chats')}}">Chats</a>
         <a class="btn btn-secondary mx-2" href="{{ route('profile')}}">Profile</a>
         <a class="btn btn-secondary mx-2" href="{{ route('logout')}}">Logout</a>
         @else

@@ -79,14 +79,14 @@ router.post('/profile', [AuthController, 'updateProfile']).use(
   })
 )
 
-router
+/*router
   .get('/chats', [RendersController, 'renderChats'])
   .as('chats')
   .use(
     middleware.auth({
       guards: ['web'],
     })
-  )
+  )*/
 
 router
   .get('/add_Item', [RendersController, 'renderAddItem'])
