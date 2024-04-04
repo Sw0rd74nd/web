@@ -15,25 +15,20 @@
 
 <body>
   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse d-flex justify-content-between">
-        <a class="navbar-brand" href="{{ route('home')}}">Kleinanzeigen</a>
+    <div class="collapse navbar-collapse d-flex justify-content-between">
+      <a class="navbar-brand" href="{{ route('home')}}">Kleinanzeigen</a>
 
-        <div class="d-flex justify-content-around">
-          @if(!auth.user)
-          <a class="btn btn-secondary mx-2" href="{{ route('addItems')}}">+</a>
-          <a class="btn btn-secondary mx-2" href="{{ route('chats')}}">Chats</a>
-          <a class="btn btn-secondary mx-2" href="{{ route('profile')}}">Profile</a>
-          @else
-          <a class="btn btn-secondary mx-2" href="{{ route('register')}}">Register</a>
-          <a class="btn btn-secondary mx-2" href="{{ route('login')}}">Login</a>
-          @endif
-        </div>
+      <div class="d-flex justify-content-around">
+        @if(!auth.user)
+        <a class="btn btn-secondary mx-2" href="{{ route('addItems')}}">+</a>
+        <a class="btn btn-secondary mx-2" href="{{ route('chats')}}">Chats</a>
+        <a class="btn btn-secondary mx-2" href="{{ route('profile')}}">Profile</a>
+        @else
+        <a class="btn btn-secondary mx-2" href="{{ route('register')}}">Register</a>
+        <a class="btn btn-secondary mx-2" href="{{ route('login')}}">Login</a>
+        @endif
       </div>
+    </div>
     </div>
   </nav>
 

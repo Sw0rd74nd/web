@@ -4,11 +4,11 @@
 
 html,
 body {
-  background-color: #F8EDE3;
+  background-color: #f8ede3;
 }
 
 .navbar {
-  background: #D0B8A8;
+  background: #d0b8a8;
   border-radius: 8px;
   box-shadow: 0 8px 20px #4d6bdd33;
   height: 64px;
@@ -17,13 +17,13 @@ body {
 }
 
 label {
-  color: #85586F;
+  color: #85586f;
   font-weight: 600;
 }
 
-input[type=text],
-input[type=password],
-input[type=email] {
+input[type='text'],
+input[type='password'],
+input[type='email'] {
   padding: 10px;
   margin: 8px 0;
   display: inline-block;
@@ -31,8 +31,8 @@ input[type=email] {
 
 .btn {
   width: 100%;
-  background-color: #85586F;
-  color: #DFD3C3;
+  background-color: #85586f;
+  color: #dfd3c3;
   border: none;
   cursor: pointer;
   font-weight: 600;
@@ -41,4 +41,3 @@ input[type=email] {
 .btn:hover {
   background-color: #85586f8e;
 }
-
