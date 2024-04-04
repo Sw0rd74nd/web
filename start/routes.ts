@@ -9,9 +9,6 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-//import db from '@adonisjs/lucid/services/db'
-//import hash from '@adonisjs/core/services/hash'
-//import { register } from 'module'
 import RendersController from '#controllers/renders_controller'
 import AuthController from '#controllers/auth_controller'
 
@@ -22,7 +19,7 @@ router.get('/', async ({ response, auth }) => {
 
 router.get('/home', [RendersController, 'renderHome']).as('home')
 
-//Unprotected Routes
+//Login/Logout
 
 router
   .get('/login', [RendersController, 'renderLogin'])
@@ -40,6 +37,17 @@ router.post('/login', [AuthController, 'user_login']).use(
 )
 
 router
+  .get('/logout', [AuthController, 'logout'])
+  .as('logout')
+  .use(
+    middleware.auth({
+      guards: ['web'],
+    })
+  )
+
+//Register
+
+router
   .get('/register', [RendersController, 'renderRegister'])
   .as('register')
   .use(
@@ -54,7 +62,7 @@ router.post('/register', [AuthController, 'user_register']).use(
   })
 )
 
-//Protected Routes
+//Profile
 
 router
   .get('/profile', [RendersController, 'renderProfile'])
@@ -64,6 +72,12 @@ router
       guards: ['web'],
     })
   )
+
+router.post('/profile', [AuthController, 'updateProfile']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)
 
 router
   .get('/chats', [RendersController, 'renderChats'])
@@ -77,15 +91,6 @@ router
 router
   .get('/add_Item', [RendersController, 'renderAddItem'])
   .as('addItems')
-  .use(
-    middleware.auth({
-      guards: ['web'],
-    })
-  )
-
-router
-  .get('/logout', [AuthController, 'logout'])
-  .as('logout')
   .use(
     middleware.auth({
       guards: ['web'],

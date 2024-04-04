@@ -2,8 +2,31 @@
     <img src="https://static.wikia.nocookie.net/dreamworks/images/2/26/Rico.jpg/revision/latest?cb=20140725162435&path-prefix=de"
         alt="Profile Picture" style="width: 300px; height: 300px; border-radius: 50%; margin-right: 50px;">
     <div style="max-width: 400px;">
-        <h1 style="margin: 0;">Profile</h1>
-        <p style="margin: 0;">Full Name: {{ auth.user.fullName }}</p>
-        <p style="margin: 0;">Email: {{ auth.user.email }}</p>
+
+        <form method="POST">
+            {{ csrfField() }}
+            <h1 style="margin: 0;">Profile</h1> <br>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" name="fullName"
+                    placeholder=" {{ auth.user.fullName }}">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Email</label>
+                <div>
+                    <input type="email" class="form-control" id="exampleInputEmail1" name="email"
+                        placeholder="{{ auth.user.email }}">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password"
+                    placeholder="New Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+
     </div>
 </div>
