@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 import RendersController from '#controllers/renders_controller'
 import AuthController from '#controllers/auth_controller'
+import ProductsController from '#controllers/products_controller'
 
 router.get('/', async ({ response, auth }) => {
   await auth.check()
@@ -30,7 +31,7 @@ router
     })
   )
 
-router.post('/login', [AuthController, 'user_login']).use(
+router.post('/login', [AuthController, 'userLogin']).use(
   middleware.guest({
     guards: ['web'],
   })
@@ -56,7 +57,7 @@ router
     })
   )
 
-router.post('/register', [AuthController, 'user_register']).use(
+router.post('/register', [AuthController, 'userRegister']).use(
   middleware.guest({
     guards: ['web'],
   })
@@ -89,8 +90,23 @@ router.post('/profile', [AuthController, 'updateProfile']).use(
   )*/
 
 router
-  .get('/add_Item', [RendersController, 'renderAddItem'])
-  .as('addItems')
+  .get('/add_Product', [RendersController, 'renderAddProduct'])
+  .as('addProduct')
+  .use(
+    middleware.auth({
+      guards: ['web'],
+    })
+  )
+
+router.post('/add_Product', [ProductsController, 'addProduct']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)
+
+router
+  .get('/productView/:id', [RendersController, 'renderProductView'])
+  .as('productView')
   .use(
     middleware.auth({
       guards: ['web'],

@@ -1,0 +1,26 @@
+<div id="product-container" style="display: flex; align-items: center; justify-content: center; height: 80vh;">
+    <img src="https://static.wikia.nocookie.net/dreamworks/images/2/26/Rico.jpg/revision/latest?cb=20140725162435&path-prefix=de"
+        alt="Product Pictures" style="width: 300px; height: 300px; border-radius: 50%; margin-right: 50px;">
+    <div style="max-width: 400px; width: 100%;">
+        <form method="POST">
+            {{ csrfField() }}
+            <div class="mb-3">
+                <label for="produtctInput" class="form-label">Product</label>
+                <input type="text" class="form-control" id="productInput" name="product" minlength="3" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descriptionInput" class="form-label">Description</label>
+                <textarea style="resize: none" class="form-control" name="description" id="descriptionInput" cols="30"
+                    rows="10"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="priceInput" class="form-label">Price</label>
+                <input type="number" class="form-control" id="priceInput" name="price" step="0.01" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add to Shop</button>
+        </form>
+    </div>
+</div>
