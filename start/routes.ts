@@ -10,7 +10,7 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 import RendersController from '#controllers/renders_controller'
-import AuthController from '#controllers/auth_controller'
+import UsersController from '#controllers/users_controller'
 import ProductsController from '#controllers/products_controller'
 
 router.get('/', async ({ response, auth }) => {
@@ -31,14 +31,14 @@ router
     })
   )
 
-router.post('/login', [AuthController, 'userLogin']).use(
+router.post('/login', [UsersController, 'userLogin']).use(
   middleware.guest({
     guards: ['web'],
   })
 )
 
 router
-  .get('/logout', [AuthController, 'logout'])
+  .get('/logout', [UsersController, 'logout'])
   .as('logout')
   .use(
     middleware.auth({
@@ -57,7 +57,7 @@ router
     })
   )
 
-router.post('/register', [AuthController, 'userRegister']).use(
+router.post('/register', [UsersController, 'userRegister']).use(
   middleware.guest({
     guards: ['web'],
   })
@@ -74,7 +74,7 @@ router
     })
   )
 
-router.post('/profile', [AuthController, 'updateProfile']).use(
+router.post('/profile', [UsersController, 'updateProfile']).use(
   middleware.auth({
     guards: ['web'],
   })

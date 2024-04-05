@@ -7,31 +7,40 @@ import db from '@adonisjs/lucid/services/db'
 export default class RendersController {
   public async renderHome({ view, auth }: HttpContext) {
     await auth.check()
-    return view.render('pages/main', { template: 'pages/products' })
+    const products = await db.from('products').select('*')
+    for (const product of products) {
+      const user = await db.from('users').where('id', product.user_id).first()
+      product.username = user.username
+    }
+    return view.render('pages/main', { template: 'pages/product/products', products })
   }
-  public async renderLogin({ view }: HttpContext) {
-    return view.render('pages/main', { template: 'pages/login' })
-  }
+
   public async renderRegister({ view }: HttpContext) {
-    return view.render('pages/main', { template: 'pages/register' })
+    return view.render('pages/main', { template: 'pages/user/register' })
   }
+
+  public async renderLogin({ view }: HttpContext) {
+    return view.render('pages/main', { template: 'pages/user/login' })
+  }
+
   public async renderProfile({ view }: HttpContext) {
-    return view.render('pages/main', { template: 'pages/profile' })
+    return view.render('pages/main', { template: 'pages/user/profile' })
   }
+
   public async renderChats({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/chats' })
   }
 
   public async renderAddProduct({ view }: HttpContext) {
-    return view.render('pages/main', { template: 'pages/addProduct' })
+    return view.render('pages/main', { template: 'pages/product/addProduct' })
   }
 
-  public async renderProductView({ view, params }: HttpContext) {
-    const product: Product = await db.from('products').where('id', params.id).first()
-    const user = await db.from('users').where('id', product.user_id).first()
-
+  public async renderProductView({ view, params, auth }: HttpContext) {
+    await auth.check()
+    const data = await db.from('products').where('id', params.id).first()
+    const user = await db.from('users').where('id', data.user_id).first()
     const username = user.username
-
-    return view.render('pages/main', { template: 'pages/productView', product, username })
+    const product = { ...data, username }
+    return view.render('pages/main', { template: 'pages/product/productView', product })
   }
 }

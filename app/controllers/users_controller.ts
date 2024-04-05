@@ -1,12 +1,23 @@
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 
-export default class AuthController {
+export default class UsersController {
   public async userRegister({ request, response, auth }: HttpContext) {
     const register_data = request.only(['username', 'email', 'password'])
-    const new_user = await User.create(register_data)
-    await auth.use('web').login(new_user)
-    return response.redirect('/')
+    try {
+      const new_user = await User.create(register_data)
+      await auth.use('web').login(new_user)
+      return response.redirect('/')
+    } catch (error) {
+      // Check if the error is due to a uniqueness constraint violation on the email column
+      if (error.code === 'SQLITE_CONSTRAINT' && error.constraint === 'users_email_unique') {
+        // Handle the error accordingly, such as sending a response indicating that the email is already in use
+        return response.status(400).send({ error: 'Email is already in use.' })
+      } else {
+        // Handle other types of errors
+        return response.status(500).send({ error: 'Internal Server Error' })
+      }
+    }
   }
 
   public async userLogin({ request, response, auth }: HttpContext) {
