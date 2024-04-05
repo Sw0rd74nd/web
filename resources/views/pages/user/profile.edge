@@ -1,4 +1,4 @@
-<div id="profile-container" style="display: flex; align-items: center; justify-content: center; height: 80vh;">
+<div class="d-flex flex-wrap mb-5 justify-content-around" id="profile-container" style=" height: 80vh;">
     <img src="https://static.wikia.nocookie.net/dreamworks/images/2/26/Rico.jpg/revision/latest?cb=20140725162435&path-prefix=de"
         alt="Profile Picture" style="width: 300px; height: 300px; border-radius: 50%; margin-right: 50px;">
     <div style="max-width: 400px; width: 100%;">
@@ -29,18 +29,32 @@
     </div>
 </div>
 
-<style>
-    @media screen and (max-width: 600px) {
+<div class="d-flex flex-column mb-5 justify-content-around" id="profile-container" style="height: 80vh;">
 
-        /* Media query styles */
-        #profile-container {
-            flex-direction: column;
-            text-align: center;
-        }
+    <h1 class="text-center">My Products</h1>
+    <div class="d-flex flex-wrap justify-content-around">
+        @each(product in products)
 
-        img {
-            margin-right: 0;
-            margin-bottom: 20px;
-        }
-    }
-</style>
+        <div class="card mb-5" style="width: 18rem;">
+            <a href="/productView/{{product.id}}" class="text-decoration-none">
+                <img src="https://static.wikia.nocookie.net/dreamworks/images/2/26/Rico.jpg/revision/latest?cb=20140725162435&path-prefix=de"
+                    class="card-img-top" alt="Product">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.product}}</h5>
+                    <p class="card-text">Description: {{product.description}}</p>
+                </div>
+
+                <div class="d-flex m-2">
+                    @if(product.active === 1)
+                    <a class="btn btn-primary m-1" class="text-decoration-none"
+                        href="/productView/{{product.id}}/deactivate">Deactivate</a>
+                    @else
+                    <a class="btn btn-success m-1 text-decoration-none"
+                        href="/productView/{{ product.id }}/activate">Activate</a>
+                    @end
+                </div>
+            </a>
+        </div>
+        @end
+    </div>
+</div>

@@ -89,6 +89,8 @@ router.post('/profile', [UsersController, 'updateProfile']).use(
     })
   )*/
 
+//Product
+
 router
   .get('/add_Product', [RendersController, 'renderAddProduct'])
   .as('addProduct')
@@ -112,3 +114,15 @@ router
       guards: ['web'],
     })
   )
+
+router.get('/productView/:id/deactivate', [ProductsController, 'deactivateProduct']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)
+
+router.get('/productView/:id/activate', [ProductsController, 'activateProduct']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)

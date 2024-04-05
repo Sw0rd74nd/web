@@ -1,5 +1,3 @@
-import Product from '#models/product'
-import User from '#models/user'
 import auth from '@adonisjs/auth/services/main'
 import type { HttpContext } from '@adonisjs/core/http'
 import db from '@adonisjs/lucid/services/db'
@@ -7,7 +5,7 @@ import db from '@adonisjs/lucid/services/db'
 export default class RendersController {
   public async renderHome({ view, auth }: HttpContext) {
     await auth.check()
-    const products = await db.from('products').select('*')
+    const products = await db.from('products').where('active', 1)
     for (const product of products) {
       const user = await db.from('users').where('id', product.user_id).first()
       product.username = user.username
@@ -23,8 +21,10 @@ export default class RendersController {
     return view.render('pages/main', { template: 'pages/user/login' })
   }
 
-  public async renderProfile({ view }: HttpContext) {
-    return view.render('pages/main', { template: 'pages/user/profile' })
+  public async renderProfile({ view, auth }: HttpContext) {
+    await auth.check()
+    const products = await db.from('products').where('user_id', auth.user!.id)
+    return view.render('pages/main', { template: 'pages/user/profile', products })
   }
 
   public async renderChats({ view }: HttpContext) {
