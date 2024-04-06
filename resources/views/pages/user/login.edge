@@ -1,4 +1,4 @@
-<div class="container d-flex bg-light overflow-hidden rounded shadow-lg p-0 justify-content-between flex-wrap">
+<div class="container d-flex bg-light overflow-hidden rounded shadow-lg p-0 justify-content-between flex-wrap mb-5">
 
     <div class="container d-flex justify-content-center" style="max-width: 30rem">
         <img src="/login_img.jpg" alt="Login Image">
@@ -8,9 +8,9 @@
         <form method="POST" class="container mt-5 ps-5">
             {{ csrfField() }}
 
-            <h1 class="m-0">Login</h1>
+            <h1 class="m-0">Login</h1> <br>
 
-            <div class="mb-3 mt-3">
+            <div class="mb-3">
                 <label for="emailInput" class="form-label">Email</label>
                 <input type="email" class="form-control" id="emailInput" name="email" required>
             </div>
@@ -28,7 +28,7 @@
 
             @end
 
-            <button type="submit" class="btn container btn-success mt-3 mb-3">Login</button>
+            <button type="submit" class="btn container btn-success mt-3 mb-3 shadow-lg">Login</button>
         </form>
     </div>
 </div>

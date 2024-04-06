@@ -1,4 +1,4 @@
-<div class="container d-flex bg-light overflow-hidden rounded shadow-lg p-0 justify-content-between flex-wrap">
+<div class="container d-flex bg-light overflow-hidden rounded shadow-lg p-0 justify-content-between flex-wrap mb-5">
 
     <div class="container d-flex justify-content-center" style="max-width: 30rem">
         <img src="/register_img.jpg" alt="Login Image">
@@ -8,9 +8,9 @@
         <form method="POST" class="container mt-3 ps-5">
             {{ csrfField() }}
 
-            <h1 class="m-0">Sign Up</h1>
+            <h1 class="m-0">Sign Up</h1> <br>
 
-            <div class="mb-3 mt-3">
+            <div class="mb-3">
                 <label for="usernameInput" class="form-label">Username</label>
                 <input type="text" class="form-control" id="usernameInput" name="username" minlength="3" maxlength="20"
                     required>
@@ -26,6 +26,11 @@
                 <input type="password" class="form-control" id="passwordInput" name="password" minlength="8" required>
             </div>
 
+            <div class="mb-3">
+                <label for="avatarInput" class="form-label">Avatar</label>
+                <input type="file" class="form-control" id="avatarInput" name="avatar">
+            </div>
+
 
             @if(flashMessages.has('notification'))
             <div class="text-center text-danger">
@@ -34,7 +39,7 @@
 
             @end
 
-            <button type="submit" class="btn container btn-success mt-3 mb-3">Sign Up</button>
+            <button type="submit" class="btn container btn-success mt-3 mb-3 shadow-lg">Sign Up</button>
         </form>
     </div>
 </div>

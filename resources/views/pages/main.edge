@@ -14,10 +14,10 @@
 </head>
 
 <body style="background: lightblue">
-  <nav class="bg-light navbar navbar-expand-lg m-4 p-3 sticky-top border rounded shadow-lg">
+  <nav class="bg-light navbar navbar-expand-lg ms-4 me-4 mb-4 p-3 sticky-top border rounded-bottom shadow-lg">
 
     <div class="collapse navbar-collapse d-flex flex-column flex-lg-row justify-content-between container-fluid">
-      <a class="navbar-brand fw-bolder" href="{{ route('home')}}">Kleinanzeigen</a>
+      <a class="navbar-brand fw-bolder" href="{{ route('home')}}">Sell'n'Sells</a>
 
       <div class="d-flex justify-content-around">
         @if(auth.isAuthenticated)
@@ -34,8 +34,13 @@
     </div>
   </nav>
 
-
   @include(template)
+
+  <footer class="bg-secondary text-white me-4 ms-4 rounded-top p-3">
+    <div class="container text-center">
+      <p>&copy; 2024 SellnSells.com</p>
+    </div>
+  </footer>
 
 </body>
 

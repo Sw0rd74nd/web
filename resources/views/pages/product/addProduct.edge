@@ -1,9 +1,12 @@
-<div id="product-container" style="display: flex; align-items: center; justify-content: center; height: 80vh;">
-    <img src="https://static.wikia.nocookie.net/dreamworks/images/2/26/Rico.jpg/revision/latest?cb=20140725162435&path-prefix=de"
-        alt="Product Pictures" style="width: 300px; height: 300px; border-radius: 50%; margin-right: 50px;">
-    <div style="max-width: 400px; width: 100%;">
-        <form method="POST">
+<div class="container-sm d-flex flex-wrap overflow-hidden rounded mb-5 justify-content-around bg-light">
+
+    <div class="container d-flex justify-content-center container-form m-3">
+        <form method="POST" class="container mt-3 ps-5">
+
             {{ csrfField() }}
+
+            <h1 class="m-0">Add New Product</h1> <br>
+
             <div class="mb-3">
                 <label for="produtctInput" class="form-label">Product</label>
                 <input type="text" class="form-control" id="productInput" name="product" minlength="3" required>
@@ -11,8 +14,8 @@
 
             <div class="mb-3">
                 <label for="descriptionInput" class="form-label">Description</label>
-                <textarea style="resize: none" class="form-control" name="description" id="descriptionInput" cols="30"
-                    rows="10"></textarea>
+                <textarea style="resize: none" class="form-control" name="description" id="descriptionInput"
+                    rows="5"></textarea>
             </div>
 
             <div class="mb-3">
@@ -20,7 +23,12 @@
                 <input type="number" class="form-control" id="priceInput" name="price" step="0.01" required>
             </div>
 
-            <button type="submit" class="btn">Add to Shop</button>
+            <div class="mb-3">
+                <label for="pictureInput" class="form-label">Picture</label>
+                <input type="file" class="form-control" id="pictureInput" name="picture">
+            </div>
+
+            <button type="submit" class="btn container btn-success mt-3 mb-3 shadow-lg">Add to Shop</button>
         </form>
     </div>
 </div>
