@@ -24,7 +24,7 @@
                 <input type="password" class="form-control" id="exampleInputPassword1" name="password"
                     placeholder="New Password" style="width: 100%;">
             </div>
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn">Update</button>
         </form>
     </div>
 </div>
@@ -32,29 +32,27 @@
 <div class="d-flex flex-column mb-5 justify-content-around" id="profile-container" style="height: 80vh;">
 
     <h1 class="text-center">My Products</h1>
-    <div class="d-flex flex-wrap justify-content-around">
+    <div class="d-flex flex-wrap justify-content-around m-4">
         @each(product in products)
-
         <div class="card mb-5" style="width: 18rem;">
-            <a href="/productView/{{product.id}}" class="text-decoration-none">
+            <a href="/productView/{{product.id}}" style="text-decoration: none; color: #85586f;">
                 <img src="https://static.wikia.nocookie.net/dreamworks/images/2/26/Rico.jpg/revision/latest?cb=20140725162435&path-prefix=de"
                     class="card-img-top" alt="Product">
                 <div class="card-body">
                     <h5 class="card-title">{{product.product}}</h5>
-                    <p class="card-text">Description: {{product.description}}</p>
                 </div>
 
                 <div class="d-flex m-2">
                     @if(product.active === 1)
-                    <a class="btn btn-primary m-1" class="text-decoration-none"
-                        href="/productView/{{product.id}}/deactivate">Deactivate</a>
+                    <a class="btn m-1 text-decoration-none" href="/productView/{{product.id}}/deactivate">Deactivate</a>
                     @else
-                    <a class="btn btn-success m-1 text-decoration-none"
-                        href="/productView/{{ product.id }}/activate">Activate</a>
+                    <a class="btn m-1 text-decoration-none" href="/productView/{{ product.id }}/activate">Activate</a>
                     @end
                 </div>
             </a>
         </div>
         @end
     </div>
+
+
 </div>

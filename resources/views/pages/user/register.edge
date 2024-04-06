@@ -1,22 +1,40 @@
-<div class="d-flex justify-content-center container-form">
-    <form method="POST">
-        {{ csrfField() }}
-        <div class="mb-3">
-            <label for="usernameInput" class="form-label">Username</label>
-            <input type="text" class="form-control" id="usernameInput" name="username" minlength="3" maxlength="20"
-                required>
-        </div>
+<div class="container d-flex bg-light overflow-hidden rounded shadow-lg p-0 justify-content-between flex-wrap">
 
-        <div class="mb-3">
-            <label for="emailInput" class="form-label">Email</label>
-            <input type="email" class="form-control" id="emailInput" name="email" required>
-        </div>
+    <div class="container d-flex justify-content-center" style="max-width: 30rem">
+        <img src="/register_img.jpg" alt="Login Image">
+    </div>
 
-        <div class="mb-3">
-            <label for="passwordInput" class="form-label">Password</label>
-            <input type="password" class="form-control" id="passwordInput" name="password" minlength="8" required>
-        </div>
+    <div class="container d-flex justify-content-center container-form" style="max-width: 35rem">
+        <form method="POST" class="container mt-3 ps-5">
+            {{ csrfField() }}
 
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+            <h1 class="m-0">Sign Up</h1>
+
+            <div class="mb-3 mt-3">
+                <label for="usernameInput" class="form-label">Username</label>
+                <input type="text" class="form-control" id="usernameInput" name="username" minlength="3" maxlength="20"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label for="emailInput" class="form-label">Email</label>
+                <input type="email" class="form-control" id="emailInput" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="passwordInput" class="form-label">Password</label>
+                <input type="password" class="form-control" id="passwordInput" name="password" minlength="8" required>
+            </div>
+
+
+            @if(flashMessages.has('notification'))
+            <div class="text-center text-danger">
+                {{flashMessages.get('notification')}}
+            </div>
+
+            @end
+
+            <button type="submit" class="btn container btn-success mt-3 mb-3">Sign Up</button>
+        </form>
+    </div>
 </div>

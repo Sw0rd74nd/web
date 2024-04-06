@@ -1,7 +1,5 @@
 import Product from '#models/product'
-import auth from '@adonisjs/auth/services/main'
 import { HttpContext } from '@adonisjs/core/http'
-import db from '@adonisjs/lucid/services/db'
 
 export default class ProductsController {
   public async addProduct({ request, response, auth }: HttpContext) {
