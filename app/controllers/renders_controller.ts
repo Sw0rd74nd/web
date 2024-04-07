@@ -5,13 +5,16 @@ export default class RendersController {
   public async renderHome({ view, auth }: HttpContext) {
     await auth.check()
     const products = await db.from('products').where('active', 1)
-    for (const product of products) {
-      const user = await db.from('users').where('id', product.user_id).first()
-      product.username = user.username
+    if (products.length > 0) {
+      for (const product of products) {
+        const user = await db.from('users').where('id', product.user_id).first()
+        product.username = user.username
+      }
+      return view.render('pages/main', { template: 'pages/product/products', products })
+    } else {
+      return view.render('pages/main', { template: 'pages/product/noProducts' })
     }
-    return view.render('pages/main', { template: 'pages/product/products', products })
   }
-
   public async renderRegister({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/user/register' })
   }

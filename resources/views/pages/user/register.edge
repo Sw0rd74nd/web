@@ -5,7 +5,7 @@
     </div>
 
     <div class="container d-flex justify-content-center container-form" style="max-width: 35rem">
-        <form method="POST" class="container mt-3 ps-5">
+        <form method="POST" class="container mt-3 ps-5" enctype="multipart/form-data">
             {{ csrfField() }}
 
             <h1 class="m-0">Sign Up</h1> <br>
@@ -28,7 +28,7 @@
 
             <div class="mb-3">
                 <label for="avatarInput" class="form-label">Avatar</label>
-                <input type="file" class="form-control" id="avatarInput" name="avatar">
+                <input type="file" class="form-control" id="avatarInput" name="avatar" required>
             </div>
 
 
@@ -36,7 +36,6 @@
             <div class="text-center text-danger">
                 {{flashMessages.get('notification')}}
             </div>
-
             @end
 
             <button type="submit" class="btn container btn-success mt-3 mb-3 shadow-lg">Sign Up</button>

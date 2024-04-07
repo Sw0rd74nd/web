@@ -1,12 +1,12 @@
 <div class="container d-flex flex-wrap overflow-hidden rounded mb-5 justify-content-around bg-light">
 
     <div class="container d-flex justify-content-center" style="max-width: 30rem">
-        <img src="/register_img.jpg" alt="Profile Picture" class="shadow-lg mt-5 rounded-circle" width="300"
-            height="300">
+        <img src="/uploads/avatars/{{ auth.user.avatar }}" alt="Avatar" class="shadow-lg mt-5 rounded-circle"
+            width="300" height="300">
     </div>
 
     <div class="container d-flex justify-content-center container-form border rounded m-3" style="max-width: 35rem">
-        <form method="POST" class="container mt-3 ps-5">
+        <form method="POST" class="container mt-3 ps-5" enctype="multipart/form-data">
             {{ csrfField() }}
             <h1 class="m-0">Profile</h1> <br>
 
@@ -29,6 +29,18 @@
                 <input type="password" class="form-control" id="passwordInput" name="password"
                     placeholder="New Password" style="width: 100%;">
             </div>
+
+            <div class="mb-3">
+                <label for="avatarInput" class="form-label">Avatar</label>
+                <input type="file" class="form-control" id="avatarInput" name="avatar">
+            </div>
+
+            @if(flashMessages.has('notification'))
+            <div class="text-center text-danger">
+                {{flashMessages.get('notification')}}
+            </div>
+            @end
+
             <button type="submit" class="btn container btn-primary mt-3 mb-3 shadow-lg">Update</button>
         </form>
     </div>
