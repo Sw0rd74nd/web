@@ -9,6 +9,7 @@ export default class RendersController {
       for (const product of products) {
         const user = await db.from('users').where('id', product.user_id).first()
         product.username = user.username
+        product.avatar = user.avatar
       }
       return view.render('pages/main', { template: 'pages/product/products', products })
     } else {
@@ -42,7 +43,8 @@ export default class RendersController {
     const data = await db.from('products').where('id', params.id).first()
     const user = await db.from('users').where('id', data.user_id).first()
     const username = user.username
-    const product = { ...data, username }
+    const avatar = user.avatar
+    const product = { ...data, username, avatar }
     return view.render('pages/main', { template: 'pages/product/productView', product })
   }
 }

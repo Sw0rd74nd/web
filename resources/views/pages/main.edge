@@ -32,8 +32,8 @@
               d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
           </svg></a>
         <a class="mx-2" href="{{ route('profile')}}">
-          <img src="/uploads/avatars/{{ auth.user.avatar }}" alt="Profile" class="rounded-circle" width="40"
-            height="40"></a>
+          <img src="/uploads/avatars/{{ auth.user.avatar }}" alt="Profile"
+            class="border border-primary border-2 rounded-circle" width="40" height="40"></a>
         <a class="btn btn-danger mx-2" href="{{ route('logout')}}">Logout</a>
         @else
         <a class="btn btn-primary mx-2" href="{{ route('register')}}">Register</a>
