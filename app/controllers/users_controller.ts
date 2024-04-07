@@ -22,7 +22,7 @@ export default class UsersController {
       return response.redirect('/')
     } catch (error) {
       session.flash('notification', 'Invalid Email or Password. Please try again.')
-      response.redirect().back()
+      return response.redirect().back()
     }
   }
 
