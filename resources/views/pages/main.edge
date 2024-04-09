@@ -15,7 +15,7 @@
 </head>
 
 <body style="background: lightblue">
-  <nav class="bg-light navbar navbar-expand-lg ms-4 me-4 mb-4 p-3 sticky-top border rounded-bottom shadow-lg">
+  <nav class="bg-light navbar navbar-expand-lg ms-4 me-4 mb-4 p-3 border rounded-bottom shadow-lg">
 
     <div class="collapse navbar-collapse d-flex flex-column flex-lg-row justify-content-between container-fluid">
       <a class="navbar-brand fw-bolder" href="{{ route('home')}}">Sell'n'Sells</a>
@@ -34,7 +34,11 @@
         <a class="mx-2" href="{{ route('profile')}}">
           <img src="/uploads/avatars/{{ auth.user.avatar }}" alt="Profile"
             class="border border-primary border-2 rounded-circle" width="40" height="40"></a>
-        <a class="btn btn-danger mx-2" href="{{ route('logout')}}">Logout</a>
+        <a class="mx-2" href="{{ route('logout')}}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            fill="currentColor" class="bi bi-door-closed text-danger" viewBox="0 0 16 16">
+            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3zm1 13h8V2H4z" />
+            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0" />
+          </svg></a>
         @else
         <a class="btn btn-primary mx-2" href="{{ route('register')}}">Register</a>
         <a class="btn btn-primary mx-2" href="{{ route('login')}}">Login</a>

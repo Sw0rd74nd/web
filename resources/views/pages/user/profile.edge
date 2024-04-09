@@ -54,8 +54,11 @@
         @each(product in products)
         <div class="container card p-0 mb-5 shadow-lg" style="width: 18rem;">
             <a href="/productView/{{product.id}}" class="text-decoration-none text-dark">
-                <img src="https://media.istockphoto.com/id/1136422297/photo/face-cream-serum-lotion-moisturizer-and-sea-salt-among-bamboo-leaves.jpg?s=612x612&w=0&k=20&c=mwzWVrDvJTkHlVf-8RL49Hs5xjuv1TrYcBW4DnWVt-0="
-                    class="card-img-top" alt="Product">
+
+                <div class="overflow-hidden" style="height: 200px;">
+                    <img src="/uploads/products_imgs/{{ product.previewImg }}" class="card-img-top" alt="Product">
+                </div>
+
                 <div class="card-body">
                     <h5 class="card-title">{{product.product}}</h5>
                 </div>

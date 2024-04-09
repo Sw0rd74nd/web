@@ -8,14 +8,17 @@ export default class RendersController {
     if (products.length > 0) {
       for (const product of products) {
         const user = await db.from('users').where('id', product.user_id).first()
+        const previewImg = await db.from('product_imgs').where('product_id', product.id).first()
         product.username = user.username
         product.avatar = user.avatar
+        product.previewImg = previewImg.img
       }
       return view.render('pages/main', { template: 'pages/product/products', products })
     } else {
       return view.render('pages/main', { template: 'pages/product/noProducts' })
     }
   }
+
   public async renderRegister({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/user/register' })
   }
@@ -27,6 +30,10 @@ export default class RendersController {
   public async renderProfile({ view, auth }: HttpContext) {
     await auth.check()
     const products = await db.from('products').where('user_id', auth.user!.id)
+    for (const product of products) {
+      const previewImg = await db.from('product_imgs').where('product_id', product.id).first()
+      product.previewImg = previewImg.img
+    }
     return view.render('pages/main', { template: 'pages/user/profile', products })
   }
 
@@ -42,9 +49,10 @@ export default class RendersController {
     await auth.check()
     const data = await db.from('products').where('id', params.id).first()
     const user = await db.from('users').where('id', data.user_id).first()
+    const imgs = await db.from('product_imgs').where('product_id', params.id)
     const username = user.username
     const avatar = user.avatar
-    const product = { ...data, username, avatar }
+    const product = { ...data, username, avatar, imgs }
     return view.render('pages/main', { template: 'pages/product/productView', product })
   }
 }

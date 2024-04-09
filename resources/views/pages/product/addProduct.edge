@@ -1,7 +1,7 @@
 <div class="container-sm d-flex flex-wrap overflow-hidden rounded mb-5 justify-content-around bg-light">
 
     <div class="container d-flex justify-content-center container-form m-3">
-        <form method="POST" class="container mt-3 ps-5">
+        <form method="POST" class="container mt-3 ps-5" enctype="multipart/form-data">
 
             {{ csrfField() }}
 
@@ -24,9 +24,15 @@
             </div>
 
             <div class="mb-3">
-                <label for="pictureInput" class="form-label">Picture</label>
-                <input type="file" class="form-control" id="pictureInput" name="picture">
+                <label for="imgsInput" class="form-label">Picture</label>
+                <input type="file" class="form-control" id="imgssInput" name="imgs" multiple>
             </div>
+
+            @if(flashMessages.has('notification'))
+            <div class="text-center text-danger">
+                {{flashMessages.get('notification')}}
+            </div>
+            @end
 
             <button type="submit" class="btn container btn-success mt-3 mb-3 shadow-lg">Add to Shop</button>
         </form>
