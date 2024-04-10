@@ -47,10 +47,15 @@ export default class RendersController {
     return view.render('pages/main', { template: 'pages/product/addProduct' })
   }
 
-  public async renderProductView({ view, params, auth, route }: HttpContext) {
+  public async renderProductView({ view, params, auth, route, response }: HttpContext) {
     await auth.check()
     const currentRoute = route?.name
     const data = await db.from('products').where('id', params.id).first()
+
+    if (!data) {
+      return response.redirect('/home')
+    }
+
     const user = await db.from('users').where('id', data.user_id).first()
     const imgs = await db.from('product_imgs').where('product_id', params.id)
     const username = user.username
