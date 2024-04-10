@@ -80,16 +80,7 @@ router.post('/profile', [UsersController, 'updateProfile']).use(
   })
 )
 
-/*router
-  .get('/chats', [RendersController, 'renderChats'])
-  .as('chats')
-  .use(
-    middleware.auth({
-      guards: ['web'],
-    })
-  )*/
-
-//Product
+//product
 
 router
   .get('/add_Product', [RendersController, 'renderAddProduct'])
@@ -115,6 +106,15 @@ router
     })
   )
 
+router
+  .post('/productView/:id', [RendersController, 'renderSearch'])
+  .as('productSearch')
+  .use(
+    middleware.auth({
+      guards: ['web'],
+    })
+  )
+
 router.get('/productView/:id/deactivate', [ProductsController, 'deactivateProduct']).use(
   middleware.auth({
     guards: ['web'],
@@ -126,3 +126,14 @@ router.get('/productView/:id/activate', [ProductsController, 'activateProduct'])
     guards: ['web'],
   })
 )
+
+//search
+
+router
+  .post('/home', [RendersController, 'renderSearch'])
+  .as('search')
+  .use(
+    middleware.guest({
+      guards: ['web'],
+    })
+  )

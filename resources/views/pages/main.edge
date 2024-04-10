@@ -20,6 +20,25 @@
     <div class="collapse navbar-collapse d-flex flex-column flex-lg-row justify-content-between container-fluid">
       <a class="navbar-brand fw-bolder" href="{{ route('home')}}">Sell'n'Sells</a>
 
+      @if( currentRoute === 'home' || currentRoute === 'search' || currentRoute === 'productView' || currentRoute ===
+      'productSearch' )
+      <div>
+        <form method="POST" class="d-flex" role="search">
+          {{ csrfField() }}
+          <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search"
+            required>
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+
+        @if(flashMessages.has('notification'))
+        <div class="text-center text-danger">
+          {{flashMessages.get('notification')}}
+        </div>
+        @end
+      </div>
+      @end
+
+
       <div class="d-flex justify-content-around">
         @if(auth.isAuthenticated)
 
@@ -35,13 +54,27 @@
           <img src="/uploads/avatars/{{ auth.user.avatar }}" alt="Profile"
             class="border border-primary border-2 rounded-circle" width="40" height="40"></a>
         <a class="mx-2" href="{{ route('logout')}}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
-            fill="currentColor" class="bi bi-door-closed text-danger" viewBox="0 0 16 16">
-            <path d="M3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3zm1 13h8V2H4z" />
-            <path d="M9 9a1 1 0 1 0 2 0 1 1 0 0 0-2 0" />
+            fill="currentColor" class="bi bi-person-fill-down text-danger" viewBox="0 0 16 16">
+            <path
+              d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7m.354 5.854 1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V10.5a.5.5 0 0 0-1 0v2.793l-.646-.647a.5.5 0 0 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+            <path
+              d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
           </svg></a>
         @else
-        <a class="btn btn-primary mx-2" href="{{ route('register')}}">Register</a>
-        <a class="btn btn-primary mx-2" href="{{ route('login')}}">Login</a>
+        <a class="mx-2" href="{{ route('register')}}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16">
+            <path
+              d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+            <path
+              d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+          </svg></a>
+        <a class="mx-2" href="{{ route('login')}}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+            fill="currentColor" class="bi bi-person-fill-up text-success" viewBox="0 0 16 16">
+            <path
+              d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-5.854 1.5 1.5a.5.5 0 0 1-.708.708L13 11.707V14.5a.5.5 0 0 1-1 0v-2.793l-.646.647a.5.5 0 0 1-.708-.708l1.5-1.5a.5.5 0 0 1 .708 0M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+            <path
+              d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4" />
+          </svg></a>
         @endif
       </div>
     </div>

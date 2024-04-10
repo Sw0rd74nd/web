@@ -43,21 +43,29 @@
                     height="60"></a>
         </div>
 
-        <div>
-            <div>
-                <h6 class="card-title">Seller:</h6> <br>
-                <h6 class="card-title">{{product.username}}</h6>
-            </div>
-            <div class="mb-3">
-                <h5 class="card-title">{{product.product}}</h5>
-            </div>
-
-            <div class="mb-3 border">
-                <p class="card-text">Description: {{product.description}}</p>
+        <div class="container p-0">
+            <div class="mb-2">
+                <h6 class="card-title">Seller: {{product.username}}</h6>
             </div>
 
             <div class="mb-3">
-                <h6 class="card-title">Price: {{product.price}} €</h6>
+                <h5 class="card-title">Product: {{product.product}}</h5>
+            </div>
+
+            <div class="mb-3">
+                <h6 class="card-text">Description:</h6>
+            </div>
+
+            <div class="mb-3 border-top border-bottom" style="min-height: 12rem">
+                <p class="card-text">{{product.description}}</p>
+            </div>
+
+            <div class="mb-3">
+                <h6 class="card-title">Active since: {{product.updated_at}}</h6>
+            </div>
+
+            <div class="mb-3">
+                <h6 class="card-title">Price: {{product.price}}€</h6>
             </div>
 
         </div>
