@@ -134,11 +134,4 @@ router.get('/productView', async ({ response, auth }) => {
 
 //Searchbar
 
-router
-  .post('/home', [RendersController, 'renderSearch'])
-  .as('search')
-  .use(
-    middleware.guest({
-      guards: ['web'],
-    })
-  )
+router.post('/home', [RendersController, 'renderSearch']).as('search')
