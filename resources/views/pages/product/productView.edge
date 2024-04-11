@@ -69,16 +69,19 @@
             </div>
 
             <div>
-                <form method="POST" action="/productView/{{product.id}}/conversation">
+                <form method="POST" action="/productView/{{product.id}}/conversation"
+                    class="container p-0 d-flex flex-column">
                     {{ csrfField() }}
-                    <button class="btn btn-success" type="submit">convo</button>
+                    <button class="container p-0 btn btn-success" type="submit" style="min-height: 2rem">Send a
+                        Message</button>
+
+                    @if(flashMessages.has('notification2'))
+                    <div class="text-center text-danger">
+                        {{flashMessages.get('notification2')}}
+                    </div>
+                    @end
                 </form>
 
-                @if(flashMessages.has('notification2'))
-                <div class="text-center text-danger">
-                    {{flashMessages.get('notification2')}}
-                </div>
-                @end
             </div>
 
         </div>

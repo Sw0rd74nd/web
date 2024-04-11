@@ -27,4 +27,6 @@ export default class ConversationsController {
 
     return response.redirect('/conversation/' + params.id)
   }
+
+  public async createMessage() {}
 }

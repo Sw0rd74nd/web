@@ -110,9 +110,10 @@ export default class RendersController {
     const sender_data = await db.from('users').where('id', conversation_data.buyer_id).first()
 
     const receiver = receiver_data.username
+    const receiver_avatar = receiver_data.avatar
     const sender = sender_data.username
 
-    const conversation = { ...product_data, receiver, sender }
+    const conversation = { ...product_data, receiver, receiver_avatar, sender }
 
     return view.render('pages/main', { template: 'pages/conversation/convo', conversation })
   }
