@@ -139,16 +139,31 @@ router.post('/home', [RendersController, 'renderSearch']).as('search')
 
 //Conversation
 
-router
-  .get('/conversation/:id', [RendersController, 'renderConvo'])
-  .as('convo')
-  .use(
-    middleware.auth({
-      guards: ['web'],
-    })
-  )
-
 router.post('/productView/:id/conversation', [ConversationsController, 'createConvo']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)
+
+router.get('/conversation/:id/buyer', [RendersController, 'renderConvoBuyer']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)
+
+router.post('/conversation/:id/buyer', [ConversationsController, 'createMessageBuyer']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)
+
+router.get('/conversation/:id/seller', [RendersController, 'renderConvoSeller']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)
+
+router.post('/conversation/:id/seller', [ConversationsController, 'createMessageSeller']).use(
   middleware.auth({
     guards: ['web'],
   })

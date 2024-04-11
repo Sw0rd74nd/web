@@ -34,12 +34,24 @@ export default class RendersController {
 
   public async renderProfile({ view, auth }: HttpContext) {
     await auth.check()
+
     const products = await db.from('products').where('user_id', auth.user!.id)
     for (const product of products) {
       const previewImg = await db.from('product_imgs').where('product_id', product.id).first()
       product.previewImg = previewImg.img
     }
-    return view.render('pages/main', { template: 'pages/user/profile', products })
+
+    const conversations = await db
+      .from('conversations')
+      .join('products', 'conversations.product_id', 'products.id')
+      .join('messages', 'conversations.id', 'messages.conversation_id')
+      .join('users', 'conversations.buyer_id', 'users.id')
+      .where('products.user_id', auth.user!.id)
+      .groupBy('conversations.id')
+
+    console.log(conversations)
+
+    return view.render('pages/main', { template: 'pages/user/profile', products, conversations })
   }
 
   public async renderAddProduct({ view }: HttpContext) {
@@ -60,10 +72,12 @@ export default class RendersController {
     const username = user.username
     const avatar = user.avatar
     const product = { ...data, username, avatar, imgs }
+    const currentUser = auth.user!.id
     return view.render('pages/main', {
       template: 'pages/product/productView',
       product,
       currentRoute,
+      currentUser,
     })
   }
 
@@ -93,7 +107,7 @@ export default class RendersController {
     }
   }
 
-  public async renderConvo({ view, params, response, auth }: HttpContext) {
+  public async renderConvoBuyer({ view, params, response, auth }: HttpContext) {
     const product_data = await db.from('products').where('id', params.id).first()
 
     if (!product_data) {
@@ -115,6 +129,39 @@ export default class RendersController {
 
     const conversation = { ...product_data, receiver, receiver_avatar, sender }
 
-    return view.render('pages/main', { template: 'pages/conversation/convo', conversation })
+    const messages = await db.from('messages').where('conversation_id', conversation_data.id)
+
+    return view.render('pages/main', {
+      template: 'pages/conversation/convo',
+      conversation,
+      messages,
+    })
+  }
+
+  public async renderConvoSeller({ view, params, response, auth }: HttpContext) {
+    const conversation_data = await db.from('conversations').where('id', params.id).first()
+
+    if (!conversation_data) {
+      return response.redirect('/home')
+    }
+
+    const product_data = await db.from('products').where('id', conversation_data.product_id).first()
+
+    const receiver_data = await db.from('users').where('id', conversation_data.buyer_id).first()
+    const sender_data = await db.from('users').where('id', auth.user!.id).first()
+
+    const receiver = receiver_data.username
+    const receiver_avatar = receiver_data.avatar
+    const sender = sender_data.username
+
+    const conversation = { ...product_data, receiver, receiver_avatar, sender }
+
+    const messages = await db.from('messages').where('conversation_id', conversation_data.id)
+
+    return view.render('pages/main', {
+      template: 'pages/conversation/convo',
+      conversation,
+      messages,
+    })
   }
 }

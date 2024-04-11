@@ -14,7 +14,7 @@
 
                     <div>
                         <div class="mb-2">
-                            <h6 class="card-title">Seller: {{conversation.receiver}} </h6>
+                            <h6 class="card-title">{{conversation.receiver}} </h6>
                         </div>
 
                         <div class="mb-3">
@@ -23,9 +23,20 @@
                     </div>
                 </div>
 
-                <div class="container d-flex border rounded mb-3" style="min-height: 20rem">
-                    <p class="card-text"></p>
+                <div class="container d-flex flex-column border rounded mb-3"
+                    style="min-height: 20rem; max-height: 20rem; overflow-y: auto;" id="messagesContainer">
+
+                    @if(messages)
+
+                    @each(message in messages)
+                    <div class="container d-flex border bg-light rounded mb-2 mt-2">
+                        {{message.content}}
+                    </div>
+                    @end
+
+                    @end
                 </div>
+
 
                 <div>
                     <form method="POST" action="" class="d-flex gap-1">
@@ -33,12 +44,6 @@
                         <input class="form-control" type="text" name="message" placeholder="Type..." required>
                         <button class="btn btn-success" type="submit">Send</button>
                     </form>
-
-                    @if(flashMessages.has('notification2'))
-                    <div class="text-center text-danger">
-                        {{flashMessages.get('notification2')}}
-                    </div>
-                    @end
                 </div>
 
             </div>
