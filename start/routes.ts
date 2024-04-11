@@ -12,6 +12,7 @@ import { middleware } from './kernel.js'
 import RendersController from '#controllers/renders_controller'
 import UsersController from '#controllers/users_controller'
 import ProductsController from '#controllers/products_controller'
+import ConversationsController from '#controllers/conversations_controller'
 
 router.get('/', async ({ response, auth }) => {
   await auth.check()
@@ -135,3 +136,20 @@ router.get('/productView', async ({ response, auth }) => {
 //Searchbar
 
 router.post('/home', [RendersController, 'renderSearch']).as('search')
+
+//Conversation
+
+router
+  .get('/conversation/:id', [RendersController, 'renderConvo'])
+  .as('convo')
+  .use(
+    middleware.auth({
+      guards: ['web'],
+    })
+  )
+
+router.post('/productView/:id/conversation', [ConversationsController, 'createConvo']).use(
+  middleware.auth({
+    guards: ['web'],
+  })
+)

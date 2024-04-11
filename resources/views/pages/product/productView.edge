@@ -68,6 +68,19 @@
                 <h6 class="card-title">Price: {{product.price}}€</h6>
             </div>
 
+            <div>
+                <form method="POST" action="/productView/{{product.id}}/conversation">
+                    {{ csrfField() }}
+                    <button class="btn btn-success" type="submit">convo</button>
+                </form>
+
+                @if(flashMessages.has('notification2'))
+                <div class="text-center text-danger">
+                    {{flashMessages.get('notification2')}}
+                </div>
+                @end
+            </div>
+
         </div>
     </div>
 

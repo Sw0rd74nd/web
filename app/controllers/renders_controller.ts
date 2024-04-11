@@ -6,7 +6,6 @@ export default class RendersController {
     await auth.check()
     const currentRoute = route?.name
     const products = await db.from('products').where('active', 1)
-    console.log(products)
     if (products.length > 0) {
       for (const product of products) {
         const user = await db.from('users').where('id', product.user_id).first()
@@ -92,5 +91,29 @@ export default class RendersController {
       session.flash('notification', 'Nothing found, please try again!')
       response.redirect().back()
     }
+  }
+
+  public async renderConvo({ view, params, response, auth }: HttpContext) {
+    const product_data = await db.from('products').where('id', params.id).first()
+
+    if (!product_data) {
+      return response.redirect('/home')
+    }
+
+    const conversation_data = await db
+      .from('conversations')
+      .where('product_id', product_data.id)
+      .where('buyer_id', auth.user!.id)
+      .first()
+
+    const receiver_data = await db.from('users').where('id', product_data.user_id).first()
+    const sender_data = await db.from('users').where('id', conversation_data.buyer_id).first()
+
+    const receiver = receiver_data.username
+    const sender = sender_data.username
+
+    const conversation = { ...product_data, receiver, sender }
+
+    return view.render('pages/main', { template: 'pages/conversation/convo', conversation })
   }
 }
