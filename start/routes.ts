@@ -128,11 +128,6 @@ router.get('/productView/:id/activate', [ProductsController, 'activateProduct'])
   })
 )
 
-router.get('/productView', async ({ response, auth }) => {
-  await auth.check()
-  return response.redirect('/home')
-})
-
 //Searchbar
 
 router.post('/home', [RendersController, 'renderSearch']).as('search')

@@ -49,9 +49,25 @@ export default class RendersController {
       .where('products.user_id', auth.user!.id)
       .groupBy('conversations.id')
 
-    console.log(conversations)
+    const ownConversations = await db
+      .from('conversations')
+      .join('products', 'conversations.product_id', 'products.id')
+      .join('messages', 'conversations.id', 'messages.conversation_id')
+      .where('conversations.buyer_id', auth.user!.id)
+      .groupBy('conversations.id')
 
-    return view.render('pages/main', { template: 'pages/user/profile', products, conversations })
+    for (const conversation of ownConversations) {
+      const seller_data = await db.from('users').where('id', conversation.user_id).first()
+      conversation.seller_username = seller_data.username
+      conversation.seller_avatar = seller_data.avatar
+    }
+
+    return view.render('pages/main', {
+      template: 'pages/user/profile',
+      products,
+      conversations,
+      ownConversations,
+    })
   }
 
   public async renderAddProduct({ view }: HttpContext) {
