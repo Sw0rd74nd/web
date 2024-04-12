@@ -151,6 +151,11 @@ export default class RendersController {
     const conversation = { ...product_data, receiver, receiver_avatar, sender }
 
     const messages = await db.from('messages').where('conversation_id', conversation_data.id)
+    for (const message of messages) {
+      const sender_data = await db.from('users').where('id', message.sender_id).first()
+      message.sender_username = sender_data.username
+      message.sender_avatar = sender_data.avatar
+    }
 
     return view.render('pages/main', {
       template: 'pages/conversation/convo',

@@ -8,8 +8,8 @@
 
                 <div class="container p-0 d-flex mb-2">
                     <div class="me-3">
-                        <a><img src="/uploads/avatars/{{ conversation.receiver_avatar }}" alt="Profile" class="rounded"
-                                width="60" height="60"></a>
+                        <img src="/uploads/avatars/{{ conversation.receiver_avatar }}" alt="Profile" class="rounded"
+                            width="60" height="60">
                     </div>
 
                     <div>
@@ -30,7 +30,30 @@
 
                     @each(message in messages)
                     <div class="container d-flex border bg-light rounded mb-2 mt-2">
-                        {{message.content}}
+                        <div class="d-flex mt-2 mb-2">
+
+                            <div class="d-flex align-items-center">
+                                <img src="/uploads/avatars/{{message.sender_avatar}}" alt="Profile" class="rounded"
+                                    width="40" height="40">
+
+                            </div>
+
+                            <div class="container d-flex flex-column">
+
+                                <div>
+
+                                    <span class="fw-semibold">{{message.sender_username}}</span>
+                                    <span class="text-secondary" style="font-size: 12px">{{message.created_at}}</span>
+
+
+                                </div>
+
+                                <div>
+                                    {{message.content}}
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     @end
 
