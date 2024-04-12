@@ -145,26 +145,21 @@ router.post('/productView/:id/conversation', [ConversationsController, 'createCo
   })
 )
 
-router.get('/conversation/:id/buyer', [RendersController, 'renderConvoBuyer']).use(
-  middleware.auth({
-    guards: ['web'],
-  })
-)
+router
+  .get('/product/:product_id/conversation/:conversation_id', [RendersController, 'renderConvo'])
+  .use(
+    middleware.auth({
+      guards: ['web'],
+    })
+  )
 
-router.post('/conversation/:id/buyer', [ConversationsController, 'createMessageBuyer']).use(
-  middleware.auth({
-    guards: ['web'],
-  })
-)
-
-router.get('/conversation/:id/seller', [RendersController, 'renderConvoSeller']).use(
-  middleware.auth({
-    guards: ['web'],
-  })
-)
-
-router.post('/conversation/:id/seller', [ConversationsController, 'createMessageSeller']).use(
-  middleware.auth({
-    guards: ['web'],
-  })
-)
+router
+  .post('/product/:product_id/conversation/:conversation_id', [
+    ConversationsController,
+    'createMessage',
+  ])
+  .use(
+    middleware.auth({
+      guards: ['web'],
+    })
+  )

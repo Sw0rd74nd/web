@@ -5,45 +5,30 @@ import db from '@adonisjs/lucid/services/db'
 
 export default class ConversationsController {
   public async createConvo({ response, params, auth }: HttpContext) {
-    const existingConversation = await db
+    let conversation = await db
       .from('conversations')
       .where('product_id', params.id)
       .where('buyer_id', auth.user!.id)
       .first()
 
-    if (!existingConversation) {
-      await Conversation.create({
+    if (!conversation) {
+      conversation = await Conversation.create({
         product_id: params.id,
         buyer_id: auth.user!.id,
       })
     }
 
-    return response.redirect('/conversation/' + params.id + '/buyer')
+    return response.redirect('/product/' + params.id + '/conversation/' + conversation.id)
   }
 
-  public async createMessageBuyer({ request, response, params, auth }: HttpContext) {
+  public async createMessage({ request, response, params, auth }: HttpContext) {
     const content = request.input('message')
-    const conversation = await db
-      .from('conversations')
-      .where('product_id', params.id)
-      .where('buyer_id', auth.user!.id)
-      .first()
-    const conversation_id = conversation.id
-    const sender_id = auth.user!.id
-    const message = { conversation_id, sender_id, content }
 
-    await Message.create({ ...message })
-
-    return response.redirect().back()
-  }
-
-  public async createMessageSeller({ request, response, params, auth }: HttpContext) {
-    const content = request.input('message')
-    const conversation_id = params.id
-    const sender_id = auth.user!.id
-    const message = { conversation_id, sender_id, content }
-
-    await Message.create({ ...message })
+    await Message.create({
+      conversation_id: params.conversation_id,
+      sender_id: auth.user!.id,
+      content: content,
+    })
 
     return response.redirect().back()
   }

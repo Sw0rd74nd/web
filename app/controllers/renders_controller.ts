@@ -107,48 +107,26 @@ export default class RendersController {
     }
   }
 
-  public async renderConvoBuyer({ view, params, response, auth }: HttpContext) {
-    const product_data = await db.from('products').where('id', params.id).first()
-
-    if (!product_data) {
-      return response.redirect('/home')
-    }
-
+  public async renderConvo({ view, params, response, auth }: HttpContext) {
+    const product_data = await db.from('products').where('id', params.product_id).first()
     const conversation_data = await db
       .from('conversations')
-      .where('product_id', product_data.id)
-      .where('buyer_id', auth.user!.id)
+      .where('id', params.conversation_id)
       .first()
 
-    const receiver_data = await db.from('users').where('id', product_data.user_id).first()
-    const sender_data = await db.from('users').where('id', conversation_data.buyer_id).first()
-
-    const receiver = receiver_data.username
-    const receiver_avatar = receiver_data.avatar
-    const sender = sender_data.username
-
-    const conversation = { ...product_data, receiver, receiver_avatar, sender }
-
-    const messages = await db.from('messages').where('conversation_id', conversation_data.id)
-
-    return view.render('pages/main', {
-      template: 'pages/conversation/convo',
-      conversation,
-      messages,
-    })
-  }
-
-  public async renderConvoSeller({ view, params, response, auth }: HttpContext) {
-    const conversation_data = await db.from('conversations').where('id', params.id).first()
-
-    if (!conversation_data) {
+    if (!product_data || !conversation_data) {
       return response.redirect('/home')
     }
 
-    const product_data = await db.from('products').where('id', conversation_data.product_id).first()
+    let receiver_data, sender_data
 
-    const receiver_data = await db.from('users').where('id', conversation_data.buyer_id).first()
-    const sender_data = await db.from('users').where('id', auth.user!.id).first()
+    if (conversation_data.buyer_id === auth.user!.id) {
+      receiver_data = await db.from('users').where('id', product_data.user_id).first()
+      sender_data = await db.from('users').where('id', conversation_data.buyer_id).first()
+    } else {
+      receiver_data = await db.from('users').where('id', conversation_data.buyer_id).first()
+      sender_data = await db.from('users').where('id', auth.user!.id).first()
+    }
 
     const receiver = receiver_data.username
     const receiver_avatar = receiver_data.avatar
