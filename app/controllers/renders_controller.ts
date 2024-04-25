@@ -124,14 +124,20 @@ export default class RendersController {
   }
 
   public async renderConvo({ view, params, response, auth }: HttpContext) {
-    const product_data = await db.from('products').where('id', params.product_id).first()
     const conversation_data = await db
       .from('conversations')
       .where('id', params.conversation_id)
+      .andWhere('product_id', params.product_id)
       .first()
 
-    if (!product_data || !conversation_data) {
-      return response.redirect('/home')
+    if (!conversation_data) {
+      return response.status(403).send('Conversation does not exist')
+    }
+
+    const product_data = await db.from('products').where('id', conversation_data.product_id).first()
+
+    if (conversation_data.buyer_id !== auth.user!.id && product_data.user_id !== auth.user!.id) {
+      return response.status(403).send('You do not have permission to access this conversation.')
     }
 
     let receiver_data, sender_data

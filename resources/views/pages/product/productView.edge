@@ -8,7 +8,8 @@
                 @each((img, index) in product.imgs)
                 <div class="carousel-item {{ index === 0 ? 'active' : '' }}">
                     <div class="container d-flex justify-content-center">
-                        <img src="/uploads/products_imgs/{{img.img}}" class="d-block w-50 rounded" alt="product images">
+                        <img src="/uploads/products_imgs/{{img.img}}" class="d-block w-50 rounded" alt="product images"
+                            style="object-fit: cover">
                     </div>
                 </div>
                 @end
@@ -39,8 +40,8 @@
     <div class="container d-flex p-3 border rounded gap-3">
 
         <div>
-            <a><img src="/uploads/avatars/{{ product.avatar }}" alt="Profile" class="rounded" width="60"
-                    height="60"></a>
+            <a><img src="/uploads/avatars/{{ product.avatar }}" alt="Profile" class="rounded" width="60" height="60"
+                    style="object-fit: cover"></a>
         </div>
 
         <div class="container p-0">
@@ -56,7 +57,7 @@
                 <h6 class="card-text">Description:</h6>
             </div>
 
-            <div class="mb-3 border-top border-bottom" style="min-height: 12rem">
+            <div class="mb-3 border-top border-bottom text-break" style="height: 12rem; overflow-y: auto;">
                 <p class="card-text">{{product.description}}</p>
             </div>
 
