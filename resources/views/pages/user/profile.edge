@@ -86,6 +86,8 @@
 
     <div class="d-flex flex-wrap justify-content-around m-4">
 
+        @if (conversations.length > 0)
+
         @each(conversation in conversations)
 
         <div class="container card p-0 mb-5 d-flex">
@@ -104,11 +106,19 @@
         </div>
 
         @end
+        @else
+        <p class="text-danger fw-bolder fs-4">
+            There are no requests for your products yet.
+        </p>
+        @end
+
     </div>
 
     <h3 class="text-center">My Requests</h3>
 
     <div class="d-flex flex-wrap justify-content-around m-4">
+
+        @if (ownConversations.length > 0)
 
         @each(conversation in ownConversations)
 
@@ -126,6 +136,13 @@
 
             </a>
         </div>
+
+        @end
+        @else
+
+        <p class="text-danger fw-bolder fs-4">
+            You don't have any requests yet.
+        </p>
 
         @end
     </div>

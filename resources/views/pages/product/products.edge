@@ -1,4 +1,5 @@
 <div class="container d-flex flex-wrap bg-light rounded shadow-lg pt-5 mb-4" style="min-height: 500px">
+    @if(products.length >0)
     @each(product in products)
     <div class="container card p-0 mb-5 shadow-lg overflow-hidden" style="width: 18rem;">
         <a href="/productView/{{product.id}}" class="text-decoration-none text-dark">
@@ -16,5 +17,10 @@
             </div>
         </a>
     </div>
+    @end
+    @else
+    <p class="container text-danger text-center fw-bolder fs-1">
+        At the moment there are no products in the Shop.
+    </p>
     @end
 </div>

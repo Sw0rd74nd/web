@@ -1,3 +1,4 @@
+import auth from '@adonisjs/auth/services/main'
 import { HttpContext } from '@adonisjs/core/http'
 import db from '@adonisjs/lucid/services/db'
 
@@ -6,22 +7,19 @@ export default class RendersController {
     await auth.check()
     const currentRoute = route?.name
     const products = await db.from('products').where('active', 1)
-    if (products.length > 0) {
-      for (const product of products) {
-        const user = await db.from('users').where('id', product.user_id).first()
-        const previewImg = await db.from('product_imgs').where('product_id', product.id).first()
-        product.username = user.username
-        product.avatar = user.avatar
-        product.previewImg = previewImg.img
-      }
-      return view.render('pages/main', {
-        template: 'pages/product/products',
-        products,
-        currentRoute,
-      })
-    } else {
-      return view.render('pages/main', { template: 'pages/product/noProducts', currentRoute })
+
+    for (const product of products) {
+      const user = await db.from('users').where('id', product.user_id).first()
+      const previewImg = await db.from('product_imgs').where('product_id', product.id).first()
+      product.username = user.username
+      product.avatar = user.avatar
+      product.previewImg = previewImg.img
     }
+    return view.render('pages/main', {
+      template: 'pages/product/products',
+      products,
+      currentRoute,
+    })
   }
 
   public async renderRegister({ view }: HttpContext) {
@@ -97,7 +95,8 @@ export default class RendersController {
     })
   }
 
-  public async renderSearch({ view, request, response, session, route }: HttpContext) {
+  public async renderSearch({ view, request, response, session, route, auth }: HttpContext) {
+    await auth.check()
     const search = request.input('search')
     const currentRoute = route?.name
     const products = await db
