@@ -5,6 +5,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 
 export default class ProductsController {
+  //function to create a product
   public async addProduct({ request, response, auth, session }: HttpContext) {
     const product_data = request.only(['product', 'description', 'price'])
     const product = await Product.create({
@@ -44,6 +45,7 @@ export default class ProductsController {
     return response.redirect('/productView/' + product.id)
   }
 
+  //function to deactivate a product
   public async deactivateProduct({ response, auth, params }: HttpContext) {
     await auth.check()
 
@@ -56,6 +58,7 @@ export default class ProductsController {
     return response.redirect('/profile')
   }
 
+  //function to activate a product
   public async activateProduct({ response, auth, params }: HttpContext) {
     await auth.check()
 

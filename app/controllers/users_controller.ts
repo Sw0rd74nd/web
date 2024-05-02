@@ -5,6 +5,7 @@ import app from '@adonisjs/core/services/app'
 import { unlink } from 'fs/promises'
 
 export default class UsersController {
+  //function to register and create a user
   public async userRegister({ request, response, auth, session }: HttpContext) {
     try {
       const register_data = request.only(['username', 'email', 'password'])
@@ -39,6 +40,7 @@ export default class UsersController {
     }
   }
 
+  //function to login a user
   public async userLogin({ request, response, auth, session }: HttpContext) {
     try {
       const user_data = request.only(['email', 'password'])
@@ -51,11 +53,13 @@ export default class UsersController {
     }
   }
 
+  //function to logout a user
   public async logout({ response, auth }: HttpContext) {
     await auth.use('web').logout()
     return response.redirect('/')
   }
 
+  //function to update the user profile
   public async updateProfile({ request, response, auth, session }: HttpContext) {
     const user = await User.find(auth.user!.id)
     if (user) {

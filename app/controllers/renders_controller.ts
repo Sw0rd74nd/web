@@ -2,6 +2,7 @@ import { HttpContext } from '@adonisjs/core/http'
 import db from '@adonisjs/lucid/services/db'
 
 export default class RendersController {
+  //function to render the home page and the products
   public async renderHome({ view, auth, route }: HttpContext) {
     await auth.check()
     const currentRoute = route?.name
@@ -21,14 +22,17 @@ export default class RendersController {
     })
   }
 
+  //function to render the register page
   public async renderRegister({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/user/register' })
   }
 
+  //function to render the login page
   public async renderLogin({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/user/login' })
   }
 
+  //function to render the profile page
   public async renderProfile({ view, auth }: HttpContext) {
     await auth.check()
 
@@ -67,10 +71,13 @@ export default class RendersController {
     })
   }
 
+  //function to render the add product page
   public async renderAddProduct({ view }: HttpContext) {
     return view.render('pages/main', { template: 'pages/product/addProduct' })
   }
 
+
+  //function to render the product view page
   public async renderProductView({ view, params, auth, route, response }: HttpContext) {
     await auth.check()
     const currentRoute = route?.name
@@ -94,6 +101,7 @@ export default class RendersController {
     })
   }
 
+  //function to render the search bar and the searched products
   public async renderSearch({ view, request, response, session, route, auth }: HttpContext) {
     await auth.check()
     const search = request.input('search')
@@ -119,8 +127,9 @@ export default class RendersController {
       session.flash('notification', 'Nothing found, please try again!')
       response.redirect().back()
     }
-  }
+  } 
 
+  //function to render the conversations/chats with the messages
   public async renderConvo({ view, params, response, auth }: HttpContext) {
     const conversation_data = await db
       .from('conversations')

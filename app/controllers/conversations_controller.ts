@@ -4,6 +4,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import db from '@adonisjs/lucid/services/db'
 
 export default class ConversationsController {
+  //function to create a conversation
   public async createConvo({ response, params, auth }: HttpContext) {
     let conversation = await db
       .from('conversations')
@@ -20,7 +21,8 @@ export default class ConversationsController {
 
     return response.redirect('/product/' + params.id + '/conversation/' + conversation.id)
   }
-
+  	
+  //function to create a message
   public async createMessage({ request, response, params, auth }: HttpContext) {
     const content = request.input('message')
 
