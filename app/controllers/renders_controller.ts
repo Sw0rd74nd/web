@@ -77,7 +77,7 @@ export default class RendersController {
     const data = await db.from('products').where('id', params.id).first()
 
     if (!data) {
-      return response.redirect('/home')
+      return response.status(403).send('Product does not exist')
     }
 
     const user = await db.from('users').where('id', data.user_id).first()

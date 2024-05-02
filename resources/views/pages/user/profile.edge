@@ -97,7 +97,7 @@
                 <div class="card-body d-flex gap-3 align-items-center">
 
                     <img src="/uploads/avatars/{{ conversation.avatar }}" alt="Seller Picture" class="rounded"
-                        width="40" height="40">
+                        width="40" height="40" style="object-fit: cover">
                     <h5 class="card-title">The user: {{conversation.username}} sent a message about your product:
                         {{conversation.product}}</h5>
                 </div>
@@ -129,7 +129,7 @@
                 <div class="card-body d-flex gap-3 align-items-center">
 
                     <img src="/uploads/avatars/{{ conversation.seller_avatar }}" alt="Seller Picture" class="rounded"
-                        width="40" height="40">
+                        width="40" height="40" style="object-fit: cover">
                     <h5 class="card-title"> You sent a message to {{conversation.seller_username}} about his
                         product: {{conversation.product}}</h5>
                 </div>
