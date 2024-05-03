@@ -10,6 +10,16 @@ export default class UsersController {
     try {
       const register_data = request.only(['username', 'email', 'password'])
 
+      if (register_data.username.length < 3) {
+        session.flash('notification', 'Username must be at least 3 characters long.')
+        return response.redirect().back()
+      }
+
+      if (register_data.password.length < 8) {
+        session.flash('notification', 'Password must be at least 8 characters long.')
+        return response.redirect().back()
+      }
+
       const avatar = request.file('avatar', {
         size: '2mb',
         extnames: ['jpg', 'jpeg', 'png', 'webp'],
