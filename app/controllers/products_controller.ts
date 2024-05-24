@@ -7,13 +7,15 @@ import app from '@adonisjs/core/services/app'
 export default class ProductsController {
   //function to create a product
   public async addProduct({ request, response, auth, session }: HttpContext) {
+    //get product data from request
     const product_data = request.only(['product', 'description', 'price'])
     const product = await Product.create({
       ...product_data,
       user_id: auth.user!.id,
       active: true,
     })
-
+    
+    //validate images
     const imgs = request.files('imgs', {
       size: '2mb',
       extnames: ['jpg', 'jpeg', 'png', 'webp'],
@@ -23,6 +25,7 @@ export default class ProductsController {
       return img.isValid
     })
 
+    //if no images are valid, return an error
     if (validatedImgs.length === 0) {
       session.flash(
         'notification',
@@ -31,6 +34,7 @@ export default class ProductsController {
       return response.redirect().back()
     }
 
+    //move images to the uploads/products_imgs directory and create a ProductImg record for each image
     for (const img of validatedImgs) {
       await img.move(app.publicPath('uploads/products_imgs'), {
         name: `${cuid()}.${img.extname}`,
@@ -51,6 +55,7 @@ export default class ProductsController {
 
     const productID = params.id
     const product = await Product.find(productID)
+    //if product exists, set active to false
     if (product) {
       product.active = false
       await product.save()
@@ -64,6 +69,7 @@ export default class ProductsController {
 
     const productID = params.id
     const product = await Product.find(productID)
+    //if product exists, set active to true
     if (product) {
       product.active = true
       await product.save()

@@ -4,10 +4,14 @@ import db from '@adonisjs/lucid/services/db'
 export default class RendersController {
   //function to render the home page and the products
   public async renderHome({ view, auth, route }: HttpContext) {
+    //check if user is logged in
     await auth.check()
+    //get the current route
     const currentRoute = route?.name
+    //get all active products
     const products = await db.from('products').where('active', 1)
 
+    //get the username, avatar and preview image for each product
     for (const product of products) {
       const user = await db.from('users').where('id', product.user_id).first()
       const previewImg = await db.from('product_imgs').where('product_id', product.id).first()
@@ -36,12 +40,14 @@ export default class RendersController {
   public async renderProfile({ view, auth }: HttpContext) {
     await auth.check()
 
+    //get all products of the user
     const products = await db.from('products').where('user_id', auth.user!.id)
     for (const product of products) {
       const previewImg = await db.from('product_imgs').where('product_id', product.id).first()
       product.previewImg = previewImg.img
     }
 
+    //get all conversations of the user from other users
     const conversations = await db
       .from('conversations')
       .join('products', 'conversations.product_id', 'products.id')
@@ -50,6 +56,7 @@ export default class RendersController {
       .where('products.user_id', auth.user!.id)
       .groupBy('conversations.id')
 
+    //get all conversations of the user
     const ownConversations = await db
       .from('conversations')
       .join('products', 'conversations.product_id', 'products.id')
@@ -57,6 +64,7 @@ export default class RendersController {
       .where('conversations.buyer_id', auth.user!.id)
       .groupBy('conversations.id')
 
+    //get the username and avatar of the seller for each conversation
     for (const conversation of ownConversations) {
       const seller_data = await db.from('users').where('id', conversation.user_id).first()
       conversation.seller_username = seller_data.username
@@ -106,10 +114,12 @@ export default class RendersController {
     await auth.check()
     const search = request.input('search')
     const currentRoute = route?.name
+    //get all active products that match the search query
     const products = await db
       .from('products')
       .where('active', 1)
       .whereLike('product', `%${search}%`)
+    //get the username, avatar and preview image for each product if there are any
     if (products.length > 0) {
       for (const product of products) {
         const user = await db.from('users').where('id', product.user_id).first()
@@ -137,18 +147,21 @@ export default class RendersController {
       .andWhere('product_id', params.product_id)
       .first()
 
+    //if conversation does not exist, return an error
     if (!conversation_data) {
       return response.status(403).send('Conversation does not exist')
     }
 
     const product_data = await db.from('products').where('id', conversation_data.product_id).first()
 
+    //if user is not the buyer or the seller, return an error
     if (conversation_data.buyer_id !== auth.user!.id && product_data.user_id !== auth.user!.id) {
       return response.status(403).send('You do not have permission to access this conversation.')
     }
 
     let receiver_data, sender_data
 
+    //get the username and avatar of the receiver and the sender of the conversation based on the user role by checking the buyer_id
     if (conversation_data.buyer_id === auth.user!.id) {
       receiver_data = await db.from('users').where('id', product_data.user_id).first()
       sender_data = await db.from('users').where('id', conversation_data.buyer_id).first()
@@ -163,6 +176,7 @@ export default class RendersController {
 
     const conversation = { ...product_data, receiver, receiver_avatar, sender }
 
+    //get all messages of the conversation
     const messages = await db.from('messages').where('conversation_id', conversation_data.id)
     for (const message of messages) {
       const sender_data = await db.from('users').where('id', message.sender_id).first()

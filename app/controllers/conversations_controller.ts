@@ -12,6 +12,7 @@ export default class ConversationsController {
       .where('buyer_id', auth.user!.id)
       .first()
 
+    //if conversation does not exist, create a new one
     if (!conversation) {
       conversation = await Conversation.create({
         product_id: params.id,
@@ -21,11 +22,13 @@ export default class ConversationsController {
 
     return response.redirect('/product/' + params.id + '/conversation/' + conversation.id)
   }
-  	
+
   //function to create a message
   public async createMessage({ request, response, params, auth }: HttpContext) {
+    //get message content from request
     const content = request.input('message')
 
+    //create a new message record
     await Message.create({
       conversation_id: params.conversation_id,
       sender_id: auth.user!.id,
