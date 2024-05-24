@@ -13,9 +13,10 @@
     defer></script>
   {{--@vite(['resources/css/app.css', 'resources/js/app.js'])--}}
   @vite(['resources/js/app.js'])
+
 </head>
 
-<body style="background: lightblue">
+<body style="background: lightblue; min-height: 100vh">
   <nav class="bg-light navbar navbar-expand-lg ms-4 me-4 mb-4 p-3 border rounded-bottom shadow-lg">
 
     <div class="collapse navbar-collapse d-flex flex-column flex-lg-row justify-content-between container-fluid">
@@ -68,14 +69,6 @@
   </nav>
 
   @include(template)
-
-  <footer class="bg-secondary text-white me-4 ms-4 rounded-top p-3">
-    <div class="d-flex justify-content-around container text-center">
-      <p>Course: TINF22</p>
-      <p>&copy; 2024 SellnSells.com</p>
-      <p>Student ID: 8036422</p>
-    </div>
-  </footer>
 
 </body>
 
